@@ -5,6 +5,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --surface: #1b1b1f;
+  --positive: #22c55e;
+  --negative: #ef4444;
 }
 
 * {
@@ -98,6 +100,12 @@ a:hover {
   box-shadow: 0 1.5rem 3rem rgba(15, 23, 42, 0.12);
 }
 
+.panel--message {
+  border: 1px solid rgba(249, 115, 22, 0.35);
+  background: rgba(249, 115, 22, 0.12);
+  color: #fed7aa;
+}
+
 .panel__head {
   display: flex;
   align-items: center;
@@ -117,8 +125,14 @@ a:hover {
   color: white;
   border-radius: 0.6rem;
   border: 1px solid #1e293b;
-  cursor: not-allowed;
+  cursor: pointer;
   font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.panel__action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .inventory-table {
@@ -171,6 +185,11 @@ a:hover {
   color: #94a3b8;
 }
 
+.timeline__source {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
 .timeline__item--active .timeline__title {
   color: #f97316;
 }
@@ -180,7 +199,7 @@ a:hover {
 }
 
 .grid--summary {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
 }
 
@@ -188,10 +207,13 @@ a:hover {
   padding: 1rem;
   background: rgba(148, 163, 184, 0.1);
   border-radius: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .metric-card h3 {
-  margin: 0 0 0.5rem;
+  margin: 0;
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -202,6 +224,81 @@ a:hover {
   margin: 0;
   font-size: 1.6rem;
   font-weight: 600;
+}
+
+.metric-sub {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.metric-delta {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  align-self: flex-start;
+}
+
+.metric-delta--positive {
+  background: rgba(34, 197, 94, 0.18);
+  color: var(--positive);
+}
+
+.metric-delta--negative {
+  background: rgba(239, 68, 68, 0.18);
+  color: var(--negative);
+}
+
+.metric-delta--neutral {
+  background: rgba(148, 163, 184, 0.12);
+  color: #cbd5f5;
+}
+
+.change-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+}
+
+.change-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.change-list li {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.change-name {
+  font-weight: 600;
+}
+
+.change-range {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.change-delta {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.change-delta.positive {
+  color: var(--positive);
+}
+
+.change-delta.negative {
+  color: var(--negative);
+}
+
+.muted {
+  color: #64748b;
+  font-size: 0.9rem;
 }
 
 .footer {

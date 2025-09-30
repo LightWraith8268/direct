@@ -1,0 +1,921 @@
+{
+  "meta": {
+    "snapshotDate": "2025-09-30",
+    "uploadedAt": "2025-09-30T19:57:30.084Z",
+    "sourceFile": "stock-items_09_30_2025.csv"
+  },
+  "totals": {
+    "items": 128,
+    "quantity": 19041.89,
+    "deltaItems": 128,
+    "deltaQuantity": 19041.89
+  },
+  "counts": {
+    "new": 128,
+    "removed": 0,
+    "increased": 0,
+    "decreased": 0,
+    "unchanged": 0
+  },
+  "newItems": [
+    {
+      "name": "SODecoRock",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 2383.28,
+      "delta": 2383.28
+    },
+    {
+      "name": "Turf - Nav Trek",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 2115,
+      "delta": 2115
+    },
+    {
+      "name": "1 1/2\" x 16\" Tree Strap Green Each",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 1998,
+      "delta": 1998
+    },
+    {
+      "name": "1 1/2\" x 8\" Tree Strap Green Each",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 1994,
+      "delta": 1994
+    },
+    {
+      "name": "1 1/2\" x 12\" Tree Strap Green Each",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 1767,
+      "delta": 1767
+    },
+    {
+      "name": "Turf - Meraki Mania",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 967.5,
+      "delta": 967.5
+    },
+    {
+      "name": "Cascade Cedar Mulch",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 744.62,
+      "delta": 744.62
+    },
+    {
+      "name": "Turf - K9 Village Park",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 625,
+      "delta": 625
+    },
+    {
+      "name": "Edging Pins (20ct)",
+      "unit": "EACH",
+      "previousQuantity": 0,
+      "quantity": 523,
+      "delta": 523
+    },
+    {
+      "name": "12\" x 3/8\" Brite Spike",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 499,
+      "delta": 499
+    },
+    {
+      "name": "4\" x 10' 14 ga Roll Top Galvanized Edging",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 334,
+      "delta": 334
+    },
+    {
+      "name": "Fabric Pins (50ct)",
+      "unit": "EACH",
+      "previousQuantity": 0,
+      "quantity": 291,
+      "delta": 291
+    },
+    {
+      "name": "16 Gauge Cal-Tie Wire 3.5lb Roll",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 285,
+      "delta": 285
+    },
+    {
+      "name": "AB Classic - Tan",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 226,
+      "delta": 226
+    },
+    {
+      "name": "4\" x 10' 18 ga Roll Top Galvanized Edging",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 225,
+      "delta": 225
+    },
+    {
+      "name": "6' T-Post",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 200,
+      "delta": 200
+    },
+    {
+      "name": "2' T-Post",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 150,
+      "delta": 150
+    },
+    {
+      "name": "SOBlock",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 144,
+      "delta": 144
+    },
+    {
+      "name": ".75\" Clear Creek",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 132.64,
+      "delta": 132.64
+    },
+    {
+      "name": ".75\" Black Granite",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 124.79,
+      "delta": 124.79
+    },
+    {
+      "name": "3' x 50' Professional 24/CS",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 119,
+      "delta": 119
+    },
+    {
+      "name": "Cityscape - 24x24 60mm - Aspen",
+      "unit": "EACH",
+      "previousQuantity": 0,
+      "quantity": 114,
+      "delta": 114
+    },
+    {
+      "name": "1.5\" Clear Creek",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 107.12,
+      "delta": 107.12
+    },
+    {
+      "name": "Class 1 Compost",
+      "unit": "YARD",
+      "previousQuantity": 0,
+      "quantity": 100.19,
+      "delta": 100.19
+    },
+    {
+      "name": "Cityscape - 24x24 60mm - Rifle",
+      "unit": "EACH",
+      "previousQuantity": 0,
+      "quantity": 96,
+      "delta": 96
+    },
+    {
+      "name": "VTC",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 89.4,
+      "delta": 89.4
+    },
+    {
+      "name": ".75\" Local River Rock",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 88.74,
+      "delta": 88.74
+    },
+    {
+      "name": "Rebar - #4 x 24\"",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 87,
+      "delta": 87
+    },
+    {
+      "name": ".75” Mountain Granite",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 78.33,
+      "delta": 78.33
+    },
+    {
+      "name": "4\" x 10' 14 ga Roll Top Green Edging",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 78,
+      "delta": 78
+    },
+    {
+      "name": "AB Classic - Grey",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 76,
+      "delta": 76
+    },
+    {
+      "name": "1.5\" Local River Rock",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 74.93,
+      "delta": 74.93
+    },
+    {
+      "name": "Coffee Brown Mulch",
+      "unit": "YARD",
+      "previousQuantity": 0,
+      "quantity": 69.04,
+      "delta": 69.04
+    },
+    {
+      "name": "Recycled Concrete",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 68.23,
+      "delta": 68.23
+    },
+    {
+      "name": "1.5” Mountain Granite",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 67.08,
+      "delta": 67.08
+    },
+    {
+      "name": "Squeege",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 66.02,
+      "delta": 66.02
+    },
+    {
+      "name": "AB Jumbo Junior - Grey",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 64,
+      "delta": 64
+    },
+    {
+      "name": "Red Road Base",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 62.92,
+      "delta": 62.92
+    },
+    {
+      "name": "AB Corner Pair - Tan",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 60,
+      "delta": 60
+    },
+    {
+      "name": "AB Jumbo Junior - Tan",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 60,
+      "delta": 60
+    },
+    {
+      "name": "AB Cap - Tan",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 59,
+      "delta": 59
+    },
+    {
+      "name": "6\" x 6\" x 8' ACQ Timber Green",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 56,
+      "delta": 56
+    },
+    {
+      "name": "12\" J Stake Black",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 55,
+      "delta": 55
+    },
+    {
+      "name": "Polymeric Sand #50 - Grey",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 51,
+      "delta": 51
+    },
+    {
+      "name": "1.5\" Black Granite",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 50.15,
+      "delta": 50.15
+    },
+    {
+      "name": "4' x 100' Polyspun #350",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 50,
+      "delta": 50
+    },
+    {
+      "name": "3' x 100' Polyspun #300",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 49,
+      "delta": 49
+    },
+    {
+      "name": "AB Cap - Grey",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 49,
+      "delta": 49
+    },
+    {
+      "name": "Polymeric Sand #50 - Tan",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 49,
+      "delta": 49
+    },
+    {
+      "name": "2-4\" Glacier River Rock",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 47.34,
+      "delta": 47.34
+    },
+    {
+      "name": "Recycled Asphalt",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 47.28,
+      "delta": 47.28
+    },
+    {
+      "name": "1.5\" Western River Rock",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 46.77,
+      "delta": 46.77
+    },
+    {
+      "name": "AB Corner Pair - Grey",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 44,
+      "delta": 44
+    },
+    {
+      "name": "Red Breeze",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 41.64,
+      "delta": 41.64
+    },
+    {
+      "name": "Concrete Sand",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 41.35,
+      "delta": 41.35
+    },
+    {
+      "name": "Cityscape - 24x24 60mm - Vail",
+      "unit": "EACH",
+      "previousQuantity": 0,
+      "quantity": 41,
+      "delta": 41
+    },
+    {
+      "name": "Tan Breeze",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 38.33,
+      "delta": 38.33
+    },
+    {
+      "name": "Pallet Charge",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 37,
+      "delta": 37
+    },
+    {
+      "name": "Grey Granite Boulders",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 35.49,
+      "delta": 35.49
+    },
+    {
+      "name": "Safe-T-Post Cap",
+      "unit": "EACH",
+      "previousQuantity": 0,
+      "quantity": 35,
+      "delta": 35
+    },
+    {
+      "name": "1.5\" Colorado rose",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 34.82,
+      "delta": 34.82
+    },
+    {
+      "name": "Planters Mix",
+      "unit": "YARD",
+      "previousQuantity": 0,
+      "quantity": 33.7,
+      "delta": 33.7
+    },
+    {
+      "name": "Redwood Mulch",
+      "unit": "YARD",
+      "previousQuantity": 0,
+      "quantity": 32.35,
+      "delta": 32.35
+    },
+    {
+      "name": "Tan Road Base",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 30.53,
+      "delta": 30.53
+    },
+    {
+      "name": ".75\" Colorado Rose",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 29.24,
+      "delta": 29.24
+    },
+    {
+      "name": "Pea Gravel",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 27.38,
+      "delta": 27.38
+    },
+    {
+      "name": "6' x 300' Polyspun #350",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 25,
+      "delta": 25
+    },
+    {
+      "name": "Envirofill 16/30 50lbs",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 25,
+      "delta": 25
+    },
+    {
+      "name": "Premium Natural Mulch",
+      "unit": "YARD",
+      "previousQuantity": 0,
+      "quantity": 25,
+      "delta": 25
+    },
+    {
+      "name": "Dairy Compost",
+      "unit": "YARD",
+      "previousQuantity": 0,
+      "quantity": 24.75,
+      "delta": 24.75
+    },
+    {
+      "name": "Mountain Granite Breeze",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 24.46,
+      "delta": 24.46
+    },
+    {
+      "name": "Fill Dirt",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 24.43,
+      "delta": 24.43
+    },
+    {
+      "name": "5-12\" Northern Cobble",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 24.07,
+      "delta": 24.07
+    },
+    {
+      "name": "12\" J Stake Brown",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 24,
+      "delta": 24
+    },
+    {
+      "name": "4' x 200' Polyspun #350",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 23,
+      "delta": 23
+    },
+    {
+      "name": "Grey Breeze",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 22.4,
+      "delta": 22.4
+    },
+    {
+      "name": "2-4\" Northern River Rock",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 18.88,
+      "delta": 18.88
+    },
+    {
+      "name": "Clear Creek 3\"-15\"",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 18.26,
+      "delta": 18.26
+    },
+    {
+      "name": ".75\" Northern River Rock",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 17.54,
+      "delta": 17.54
+    },
+    {
+      "name": "6\" x 6\" x 8' ACQ Timber Brown",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 17,
+      "delta": 17
+    },
+    {
+      "name": "AZ Buff Patio",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 16.22,
+      "delta": 16.22
+    },
+    {
+      "name": "9\" x 25' Wattle",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 16,
+      "delta": 16
+    },
+    {
+      "name": "Dark Brown Mulch",
+      "unit": "YARD",
+      "previousQuantity": 0,
+      "quantity": 14.65,
+      "delta": 14.65
+    },
+    {
+      "name": "1.5\" Northern River Rock",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 13.92,
+      "delta": 13.92
+    },
+    {
+      "name": "4\" x 150\" Tree Wrap",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 13,
+      "delta": 13
+    },
+    {
+      "name": "9' x 300' Polyspun #350",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 10,
+      "delta": 10
+    },
+    {
+      "name": "8' x 10' Blue Tarp - 5 Mil",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 9,
+      "delta": 9
+    },
+    {
+      "name": "Technisoil Commercial Surface",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 9,
+      "delta": 9
+    },
+    {
+      "name": "6' x 250' PolyPro #55",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 8,
+      "delta": 8
+    },
+    {
+      "name": "Technisoil Pathway Stabilizer G3 5 Gallon",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 8,
+      "delta": 8
+    },
+    {
+      "name": "Edging Pins (500ct)",
+      "unit": "Each",
+      "previousQuantity": 0,
+      "quantity": 7,
+      "delta": 7
+    },
+    {
+      "name": "Steel Wheelbarrow - 6 cu ft",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 7,
+      "delta": 7
+    },
+    {
+      "name": "1.5\" Glacier River Rock",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 6.45,
+      "delta": 6.45
+    },
+    {
+      "name": "ID Quartzite Cowboy Coffee Patio",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 6.35,
+      "delta": 6.35
+    },
+    {
+      "name": "OK Brown 1.5\" Patio",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 6.32,
+      "delta": 6.32
+    },
+    {
+      "name": "ID Quartzite Silver Patio",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 5.72,
+      "delta": 5.72
+    },
+    {
+      "name": "OK Blue 1.5\" Patio",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 5.57,
+      "delta": 5.57
+    },
+    {
+      "name": "Rawlins Wall Rock - Moss",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 5.31,
+      "delta": 5.31
+    },
+    {
+      "name": "ID Quartzite Gold Patio",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 5.22,
+      "delta": 5.22
+    },
+    {
+      "name": "Screened Top Soil",
+      "unit": "YARD",
+      "previousQuantity": 0,
+      "quantity": 5.03,
+      "delta": 5.03
+    },
+    {
+      "name": "1\" x 4\" x 20' Black Bend-a-Board",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 5,
+      "delta": 5
+    },
+    {
+      "name": "10 Tine Fork - 30\" - Wood",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 5,
+      "delta": 5
+    },
+    {
+      "name": "24\" Aluminum Landscape Rake",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 5,
+      "delta": 5
+    },
+    {
+      "name": "8' Dig Free Paver Edging",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 5,
+      "delta": 5
+    },
+    {
+      "name": "Black Shovel - 48\" - Fiberglass",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 5,
+      "delta": 5
+    },
+    {
+      "name": "Drain Spade - 48\" - Fiberglass",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 5,
+      "delta": 5
+    },
+    {
+      "name": "Round Shovel - 48\" - Steel",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 5,
+      "delta": 5
+    },
+    {
+      "name": "Scoop Shovel - 27\" - Poly",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 5,
+      "delta": 5
+    },
+    {
+      "name": "Rawlins Boulders - Moss",
+      "unit": "TON",
+      "previousQuantity": 0,
+      "quantity": 4.24,
+      "delta": 4.24
+    },
+    {
+      "name": "36\" Aluminum Landscape Rake",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 4,
+      "delta": 4
+    },
+    {
+      "name": "6' x 100' Polyspun #300",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 4,
+      "delta": 4
+    },
+    {
+      "name": "Aluminum Grain Scoop - 30\" - Wood",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 4,
+      "delta": 4
+    },
+    {
+      "name": "Round Shovel - 47\" - Wood",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 4,
+      "delta": 4
+    },
+    {
+      "name": "16 Tine Bow Rake - 54\" - Wood",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 3,
+      "delta": 3
+    },
+    {
+      "name": "40D Nails 50lbs - 5\"",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 3,
+      "delta": 3
+    },
+    {
+      "name": "Poly Wheelbarrow - 10 cu ft",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 3,
+      "delta": 3
+    },
+    {
+      "name": "Square Shovel - 48\" - Fiberglass",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 3,
+      "delta": 3
+    },
+    {
+      "name": "NM Buff Patio",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 2.66,
+      "delta": 2.66
+    },
+    {
+      "name": "CO Red 1.5\" Random LS 03",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 2.32,
+      "delta": 2.32
+    },
+    {
+      "name": "AZ Buff Select",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 1.92,
+      "delta": 1.92
+    },
+    {
+      "name": "1\" x 4\" x 20' Brown Bend-a-Board",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 1,
+      "delta": 1
+    },
+    {
+      "name": "24\" Blue Broom - 60\" - Wood",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 1,
+      "delta": 1
+    },
+    {
+      "name": "Fabric Pins (1000 ct)",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 1,
+      "delta": 1
+    },
+    {
+      "name": "Fuel Surcharge",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 1,
+      "delta": 1
+    },
+    {
+      "name": "Ring Of Fire - Charcoal",
+      "unit": "Unit",
+      "previousQuantity": 0,
+      "quantity": 1,
+      "delta": 1
+    },
+    {
+      "name": "16' x 20' Blue Tarp - 5 Mil",
+      "unit": "Retail",
+      "previousQuantity": 0,
+      "quantity": 0,
+      "delta": 0
+    },
+    {
+      "name": "4' x 250' PolyPro #55",
+      "unit": "Retail",
+      "previousQuantity": 0,
+      "quantity": 0,
+      "delta": 0
+    },
+    {
+      "name": "Round Shovel - 29\" - Wood",
+      "unit": "Retail",
+      "previousQuantity": 0,
+      "quantity": 0,
+      "delta": 0
+    }
+  ],
+  "removedItems": [],
+  "increases": [],
+  "decreases": []
+}

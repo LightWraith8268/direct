@@ -5,6 +5,53 @@
   export let items: SnapshotItem[] = [];
 
   const hasData = () => meta && items.length > 0;
+
+  const escape = (value: string) => {
+    if (value.includes("\"") || value.includes(",") || value.includes("\n")) {
+      return `"${value.replace(/"/g, '""')}"`;
+    }
+    return value;
+  };
+
+  const formatQuantity = (value: number) => {
+    const rounded = Number(value.toFixed(3));
+    if (Number.isInteger(rounded)) {
+      return rounded.toString();
+    }
+    return rounded.toString();
+  };
+
+  const toCsv = () => {
+    const header = ["Name", "Unit", "Quantity"].join(",");
+    const rows = items.map((item) =>
+      [
+        escape(item.name),
+        escape(item.unit ?? ""),
+        escape(formatQuantity(item.quantity)),
+      ].join(",")
+    );
+
+    return [header, ...rows].join("\r\n");
+  };
+
+  const handleExport = () => {
+    if (!hasData()) {
+      return;
+    }
+
+    const csv = `\uFEFF${toCsv()}`;
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const baseName = meta?.sourceFile?.replace(/\.csv$/i, "") ?? `inventory-${meta?.snapshotDate ?? "latest"}`;
+
+    link.href = url;
+    link.download = `${baseName}-export.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 </script>
 
 <section class="panel">
@@ -19,7 +66,9 @@
         <p class="panel__sub">Waiting for processed inventory data…</p>
       {/if}
     </div>
-    <button class="panel__action" disabled>Export CSV</button>
+    <button class="panel__action" type="button" on:click={handleExport} disabled={!hasData()}>
+      Export CSV
+    </button>
   </header>
 
   {#if hasData()}
@@ -47,3 +96,4 @@
     </p>
   {/if}
 </section>
+

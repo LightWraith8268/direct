@@ -1,33 +1,33 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `data/raw/` holds uploaded CSV snapshots named `stock-items_MM_DD_YYYY.csv` (e.g. `stock-items_09_30_2025.csv`).
-- `data/snapshots/` stores processed JSON snapshots keyed by ISO date plus upload timestamp.
-- `inventory/` contains the GitHub Pages subsite (Svelte + Vite app) with source under `inventory/src/` and static assets in `inventory/public/`.
-- `scripts/` hosts Node+TypeScript utilities such as `processSnapshots.ts` that convert raw CSV files into JSON artifacts and diffs.
+- `data/raw/` stores uploaded CSV snapshots named `stock-items_MM_DD_YYYY.csv`.
+- `data/snapshots/` and `data/reports/` hold generated JSON payloads and change reports; matching copies live under `inventory/public/data/` for the GitHub Pages build.
+- `inventory/` contains the Svelte + Vite subsite (`inventory/src/` for code, `inventory/public/` for static assets).
+- `scripts/` hosts Node+TypeScript tooling (`processSnapshots.ts`) that parses CSV input, produces snapshots, and computes diff metadata.
 
 ## Build, Test, and Development Commands
-- `npm run build-data` — parse raw CSV files, update `data/snapshots/`, and refresh aggregated indexes.
-- `npm run dev` (in `inventory/`) — launch the Vite dev server for the inventory dashboard.
-- `npm run build` — produce the static site for GitHub Pages deployment into `inventory/dist/`.
+- `npm run build-data` – parse raw CSV files, refresh snapshots, reports, and update `latest*.json` artifacts.
+- `npm run dev` (inside `inventory/`) – launch the dashboard locally with hot reload.
+- `npm run build` (inside `inventory/`) – generate the production bundle in `inventory/dist/` for GitHub Pages.
 
 ## Coding Style & Naming Conventions
-- Use TypeScript with 2-space indentation; prefer named exports for shared modules.
-- Keep file names kebab-case (`inventory/src/components/item-history.svelte`).
-- Derive snapshot JSON filenames as `YYYY-MM-DDTHHMMZ.json`; always capture `uploadedAt` alongside `snapshotDate`.
-- Run `npm run lint` before committing; the project uses ESLint + Prettier defaults tailored for Svelte.
+- TypeScript with 2-space indentation; prefer named exports for shared modules.
+- Use kebab-case for Svelte files (`inventory/src/components/change-highlights.svelte`).
+- Snapshot filenames follow `YYYY-MM-DD_<timestamp>.json`; reports mirror the snapshot name in `data/reports/`.
+- Lint with ESLint + Prettier before committing (`npm run lint`).
 
 ## Testing Guidelines
-- Write component and utility tests with Vitest; place them next to sources as `*.test.ts` or `*.spec.ts`.
-- Cover CSV parsing edge cases (missing quantities, duplicated names) and UI regression cases with Playwright smoke tests (`tests/e2e/`).
-- Maintain >85% coverage for processing utilities; run `npm run test -- --coverage` locally before PRs.
+- Unit-test parsers and utilities with Vitest (`*.test.ts` next to sources).
+- Cover UI flows with Playwright smoke tests in `tests/e2e/`.
+- Target =85% coverage on data-processing scripts; run `npm run test -- --coverage` ahead of PRs.
 
 ## Commit & Pull Request Guidelines
-- Follow Conventional Commits (`feat: add snapshot diff table`, `fix: handle blank unit`); summarize scope in 72 characters or fewer.
-- Each PR should describe data or UI changes, include relevant screenshots for UI updates, and link to tracking issues.
-- Ensure CI passes build, lint, and test jobs. Rebase on `main` before requesting review to avoid stale snapshot data.
+- Use Conventional Commits (`feat: add change highlights panel`, `fix: guard csv export`). Keep subject =72 characters.
+- Document PR intent, attach screenshots for UI updates, and link tracking issues.
+- Confirm CI passes build, lint, and tests; rebase on `main` to avoid regenerating stale snapshot files.
 
 ## Snapshot Processing Workflow
-- When adding a CSV, drop it into `data/raw/` and run `npm run build-data` to regenerate artifacts.
-- The processor compares each snapshot to the latest upload for the same `snapshotDate`; older same-day uploads remain in history charts.
-- Review generated diffs in `data/index.json` and commit both raw CSV and derived JSON together for traceability.
+- Drop new CSVs into `data/raw/` and run `npm run build-data`; the script clears derived folders, rebuilds snapshots, and emits `latest.json` plus `latest-report.json`.
+- Compare change reports in `data/reports/` and `inventory/public/data/reports/` to review increases, decreases, and new items.
+- Commit raw CSVs alongside generated artifacts for traceability across deployments.

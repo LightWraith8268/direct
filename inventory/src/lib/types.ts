@@ -21,3 +21,32 @@ export interface SnapshotIndexEntry extends SnapshotMeta {
   totalItems: number;
   totalQuantity: number;
 }
+
+export interface ChangeEntry {
+  name: string;
+  unit: string;
+  previousQuantity: number;
+  quantity: number;
+  delta: number;
+}
+
+export interface SnapshotReport {
+  meta: SnapshotMeta;
+  totals: {
+    items: number;
+    quantity: number;
+    deltaItems: number;
+    deltaQuantity: number;
+  };
+  counts: {
+    new: number;
+    removed: number;
+    increased: number;
+    decreased: number;
+    unchanged: number;
+  };
+  newItems: ChangeEntry[];
+  removedItems: ChangeEntry[];
+  increases: ChangeEntry[];
+  decreases: ChangeEntry[];
+}

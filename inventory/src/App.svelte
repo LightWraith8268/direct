@@ -1,9 +1,16 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import ChangeHighlights from "./components/ChangeHighlights.svelte";
   import InventorySummary from "./components/InventorySummary.svelte";
   import LatestSnapshot from "./components/LatestSnapshot.svelte";
   import SnapshotTimeline from "./components/SnapshotTimeline.svelte";
-  import type { SnapshotIndexEntry, SnapshotItem, SnapshotMeta, SnapshotPayload } from "./lib/types";
+  import type {
+    SnapshotIndexEntry,
+    SnapshotItem,
+    SnapshotMeta,
+    SnapshotPayload,
+    SnapshotReport,
+  } from "./lib/types";
 
   const base = import.meta.env.BASE_URL ?? "/";
 
@@ -21,15 +28,17 @@
 
   let loading = true;
   let errorMessage = "";
-  let summary = { totalItems: 0, totalQuantity: 0, changedCount: 0 };
   let latestMeta: SnapshotMeta | null = null;
   let latestItems: SnapshotItem[] = [];
   let timeline: SnapshotIndexEntry[] = [];
+  let report: SnapshotReport | null = null;
+  let hasBaseline = false;
 
   onMount(async () => {
     try {
       const entries = await fetchIndex();
       timeline = sortTimeline(entries);
+      hasBaseline = entries.length > 1;
 
       if (entries.length === 0) {
         applyDemoData("No processed snapshots found. Add CSV files to data/raw and rerun build-data.");
@@ -38,14 +47,12 @@
 
       const latestEntry = findLatest(entries);
       const payload = await fetchSnapshot(latestEntry.path);
+      const latestReport = await fetchLatestReport();
 
       latestMeta = payload.meta;
       latestItems = payload.items ?? [];
-      summary = {
-        totalItems: latestEntry.totalItems,
-        totalQuantity: latestEntry.totalQuantity,
-        changedCount: 0,
-      };
+      report = latestReport ?? buildFallbackReport(payload);
+      errorMessage = "";
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unable to load snapshot data.";
       applyDemoData(message);
@@ -78,6 +85,23 @@
     return (await response.json()) as SnapshotPayload;
   }
 
+  async function fetchLatestReport(): Promise<SnapshotReport | null> {
+    const response = await fetch(`${base}data/latest-report.json`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch latest-report.json (${response.status})`);
+    }
+
+    const data = await response.json();
+    if (!data) {
+      return null;
+    }
+
+    return data as SnapshotReport;
+  }
+
   function sortTimeline(entries: SnapshotIndexEntry[]): SnapshotIndexEntry[] {
     return [...entries].sort((a, b) => {
       const byDate = b.snapshotDate.localeCompare(a.snapshotDate);
@@ -93,15 +117,43 @@
     });
   }
 
+  function buildFallbackReport(payload: SnapshotPayload): SnapshotReport {
+    const items = payload.items ?? [];
+    const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+    return {
+      meta: payload.meta,
+      totals: {
+        items: items.length,
+        quantity: Number(totalQuantity.toFixed(3)),
+        deltaItems: items.length,
+        deltaQuantity: Number(totalQuantity.toFixed(3)),
+      },
+      counts: {
+        new: items.length,
+        removed: 0,
+        increased: 0,
+        decreased: 0,
+        unchanged: 0,
+      },
+      newItems: items.map((item) => ({
+        name: item.name,
+        unit: item.unit,
+        previousQuantity: 0,
+        quantity: Number(item.quantity.toFixed(3)),
+        delta: Number(item.quantity.toFixed(3)),
+      })),
+      removedItems: [],
+      increases: [],
+      decreases: [],
+    };
+  }
+
   function applyDemoData(message: string) {
     errorMessage = message;
     latestMeta = demoMeta;
     latestItems = demoItems;
-    summary = {
-      totalItems: demoItems.length,
-      totalQuantity: demoItems.reduce((sum, item) => sum + item.quantity, 0),
-      changedCount: 0,
-    };
+    report = buildFallbackReport({ meta: demoMeta, items: demoItems });
+    hasBaseline = false;
     timeline = [
       {
         snapshotDate: demoMeta.snapshotDate,
@@ -110,7 +162,7 @@
         path: "data/snapshots/demo.json",
         latestForDate: true,
         totalItems: demoItems.length,
-        totalQuantity: summary.totalQuantity,
+        totalQuantity: report.totals.quantity,
       },
     ];
   }
@@ -134,18 +186,18 @@
     </section>
   {:else}
     {#if errorMessage}
-      <section class="panel">
+      <section class="panel panel--message">
         <p>{errorMessage}</p>
       </section>
     {/if}
 
     <section class="grid grid--wide">
-      <InventorySummary
-        totalItems={summary.totalItems}
-        totalQuantity={summary.totalQuantity}
-        changedCount={summary.changedCount}
-      />
+      <InventorySummary {report} {hasBaseline} />
       <SnapshotTimeline snapshots={timeline} />
+    </section>
+
+    <section class="grid grid--wide">
+      <ChangeHighlights {report} {hasBaseline} />
     </section>
 
     <section class="grid">
@@ -160,3 +212,5 @@
     </p>
   </footer>
 </main>
+
+

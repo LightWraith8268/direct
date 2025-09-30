@@ -4,9 +4,15 @@ import { parse } from "csv-parse/sync";
 
 const RAW_DIR = path.resolve("data", "raw");
 const SNAPSHOT_DIR = path.resolve("data", "snapshots");
+const REPORT_DIR = path.resolve("data", "reports");
 const DATA_INDEX_PATH = path.resolve("data", "index.json");
+const DATA_LATEST_PATH = path.resolve("data", "latest.json");
+const DATA_LATEST_REPORT_PATH = path.resolve("data", "latest-report.json");
+
 const PUBLIC_DATA_DIR = path.resolve("inventory", "public", "data");
 const PUBLIC_SNAPSHOT_DIR = path.join(PUBLIC_DATA_DIR, "snapshots");
+const PUBLIC_REPORTS_DIR = path.join(PUBLIC_DATA_DIR, "reports");
+const PUBLIC_LATEST_REPORT_PATH = path.join(PUBLIC_DATA_DIR, "latest-report.json");
 
 interface CsvRow {
   Name: string;
@@ -44,13 +50,44 @@ interface SnapshotRecord {
   indexEntry: SnapshotIndexEntry;
 }
 
+interface ChangeEntry {
+  name: string;
+  unit: string;
+  previousQuantity: number;
+  quantity: number;
+  delta: number;
+}
+
+interface SnapshotReport {
+  meta: SnapshotMeta;
+  totals: {
+    items: number;
+    quantity: number;
+    deltaItems: number;
+    deltaQuantity: number;
+  };
+  counts: {
+    new: number;
+    removed: number;
+    increased: number;
+    decreased: number;
+    unchanged: number;
+  };
+  newItems: ChangeEntry[];
+  removedItems: ChangeEntry[];
+  increases: ChangeEntry[];
+  decreases: ChangeEntry[];
+}
+
 async function main() {
   await ensureDirectories();
+  await clearDerivedDirectories();
   const csvFiles = await listCsvFiles();
 
   if (csvFiles.length === 0) {
     console.warn("No CSV snapshots found in data/raw. Skipping processing.");
     await writeIndex([]);
+    await clearLatestOutputs();
     return;
   }
 
@@ -62,20 +99,49 @@ async function main() {
     await writeSnapshot(record);
   }
 
+  const reports = computeReports(records);
   annotateLatest(records);
   await writeIndex(records.map((record) => record.indexEntry));
-  await writeLatest(records);
+  await writeReports(records, reports);
+
+  const latestRecord = findLatestRecord(records);
+  await Promise.all([
+    writeLatest(latestRecord),
+    writeLatestReport(latestRecord, reports),
+  ]);
 }
 
 async function ensureDirectories() {
   await Promise.all([
     fs.mkdir(RAW_DIR, { recursive: true }),
     fs.mkdir(SNAPSHOT_DIR, { recursive: true }),
+    fs.mkdir(REPORT_DIR, { recursive: true }),
     fs.mkdir(PUBLIC_DATA_DIR, { recursive: true }),
     fs.mkdir(PUBLIC_SNAPSHOT_DIR, { recursive: true }),
+    fs.mkdir(PUBLIC_REPORTS_DIR, { recursive: true }),
   ]);
 }
 
+async function clearDerivedDirectories() {
+  await Promise.all([
+    emptyDir(SNAPSHOT_DIR),
+    emptyDir(REPORT_DIR),
+    emptyDir(PUBLIC_SNAPSHOT_DIR),
+    emptyDir(PUBLIC_REPORTS_DIR),
+  ]);
+}
+
+async function emptyDir(directory: string) {
+  try {
+    const entries = await fs.readdir(directory);
+    await Promise.all(entries.map((entry) => fs.rm(path.join(directory, entry), { recursive: true, force: true })));
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      return;
+    }
+    throw error;
+  }
+}
 async function listCsvFiles(): Promise<string[]> {
   const entries = await fs.readdir(RAW_DIR, { withFileTypes: true });
   return entries
@@ -217,7 +283,7 @@ function annotateLatest(records: SnapshotRecord[]) {
   }
 
   for (const list of byDate.values()) {
-    list.sort((a, b) => a.payload.meta.uploadedAt.localeCompare(b.payload.meta.uploadedAt));
+    list.sort(compareRecords);
     const latest = list[list.length - 1];
     latest.indexEntry.latestForDate = true;
   }
@@ -238,25 +304,199 @@ async function writeIndex(entries: SnapshotIndexEntry[]) {
   ]);
 }
 
-async function writeLatest(records: SnapshotRecord[]) {
-  if (records.length === 0) {
+async function writeReports(records: SnapshotRecord[], reports: Map<string, SnapshotReport>) {
+  await Promise.all([
+    fs.mkdir(REPORT_DIR, { recursive: true }),
+    fs.mkdir(PUBLIC_REPORTS_DIR, { recursive: true }),
+  ]);
+
+  await Promise.all(
+    records.map(async (record) => {
+      const report = reports.get(record.jsonFileName);
+      if (!report) return;
+
+      const json = JSON.stringify(report, null, 2);
+      await Promise.all([
+        fs.writeFile(path.join(REPORT_DIR, record.jsonFileName), json),
+        fs.writeFile(path.join(PUBLIC_REPORTS_DIR, record.jsonFileName), json),
+      ]);
+    })
+  );
+}
+
+async function writeLatest(record: SnapshotRecord | null) {
+  if (!record) {
+    await clearLatestOutputs();
     return;
   }
 
-  const latest = records.reduce((acc, current) => {
-    if (!acc) return current;
-    if (current.payload.meta.uploadedAt.localeCompare(acc.payload.meta.uploadedAt) > 0) {
-      return current;
-    }
-    return acc;
+  const json = JSON.stringify(record.payload, null, 2);
+
+  await Promise.all([
+    fs.writeFile(DATA_LATEST_PATH, json),
+    fs.writeFile(path.join(PUBLIC_DATA_DIR, "latest.json"), json),
+  ]);
+}
+
+async function writeLatestReport(record: SnapshotRecord | null, reports: Map<string, SnapshotReport>) {
+  if (!record) {
+    await fs.writeFile(PUBLIC_LATEST_REPORT_PATH, JSON.stringify(null));
+    await fs.writeFile(DATA_LATEST_REPORT_PATH, JSON.stringify(null));
+    return;
+  }
+
+  const report = reports.get(record.jsonFileName);
+  if (!report) {
+    return;
+  }
+
+  const json = JSON.stringify(report, null, 2);
+  await Promise.all([
+    fs.writeFile(DATA_LATEST_REPORT_PATH, json),
+    fs.writeFile(PUBLIC_LATEST_REPORT_PATH, json),
+  ]);
+}
+
+async function clearLatestOutputs() {
+  await Promise.all([
+    fs.writeFile(DATA_LATEST_PATH, JSON.stringify(null)),
+    fs.writeFile(path.join(PUBLIC_DATA_DIR, "latest.json"), JSON.stringify(null)),
+    fs.writeFile(DATA_LATEST_REPORT_PATH, JSON.stringify(null)),
+    fs.writeFile(PUBLIC_LATEST_REPORT_PATH, JSON.stringify(null)),
+  ]).catch(() => {
+    // ignore missing directories during cleanup
   });
+}
 
-  const json = JSON.stringify(latest.payload, null, 2);
+function computeReports(records: SnapshotRecord[]): Map<string, SnapshotReport> {
+  const sorted = [...records].sort(compareRecords);
+  const reports = new Map<string, SnapshotReport>();
+  let previous: SnapshotRecord | null = null;
 
-  await fs.writeFile(path.join(PUBLIC_DATA_DIR, "latest.json"), json);
+  for (const record of sorted) {
+    const report = buildReport(record, previous);
+    reports.set(record.jsonFileName, report);
+    previous = record;
+  }
+
+  return reports;
+}
+
+function buildReport(current: SnapshotRecord, previous: SnapshotRecord | null): SnapshotReport {
+  const previousItems = previous ? previous.payload.items : [];
+  const previousIndex = new Map(previousItems.map((item) => [item.name, item]));
+  const currentIndex = new Map(current.payload.items.map((item) => [item.name, item]));
+
+  const newItems: ChangeEntry[] = [];
+  const removedItems: ChangeEntry[] = [];
+  const increases: ChangeEntry[] = [];
+  const decreases: ChangeEntry[] = [];
+  let unchanged = 0;
+
+  for (const item of current.payload.items) {
+    const prior = previousIndex.get(item.name);
+    if (!prior) {
+      newItems.push(createChangeEntry(item, 0));
+      continue;
+    }
+
+    const delta = roundQuantity(item.quantity - prior.quantity);
+    if (delta > 0) {
+      increases.push(createChangeEntry(item, prior.quantity, delta));
+    } else if (delta < 0) {
+      decreases.push(createChangeEntry(item, prior.quantity, delta));
+    } else {
+      unchanged += 1;
+    }
+  }
+
+  if (previous) {
+    for (const item of previous.payload.items) {
+      if (!currentIndex.has(item.name)) {
+        removedItems.push({
+          name: item.name,
+          unit: item.unit,
+          previousQuantity: roundQuantity(item.quantity),
+          quantity: 0,
+          delta: roundQuantity(-item.quantity),
+        });
+      }
+    }
+  }
+
+  sortChanges(newItems, removedItems, increases, decreases);
+
+  const deltaItems = current.indexEntry.totalItems - (previous?.indexEntry.totalItems ?? 0);
+  const deltaQuantity = roundQuantity(
+    current.indexEntry.totalQuantity - (previous?.indexEntry.totalQuantity ?? 0)
+  );
+
+  return {
+    meta: current.payload.meta,
+    totals: {
+      items: current.indexEntry.totalItems,
+      quantity: current.indexEntry.totalQuantity,
+      deltaItems,
+      deltaQuantity,
+    },
+    counts: {
+      new: newItems.length,
+      removed: removedItems.length,
+      increased: increases.length,
+      decreased: decreases.length,
+      unchanged,
+    },
+    newItems,
+    removedItems,
+    increases,
+    decreases,
+  };
+}
+
+function createChangeEntry(item: SnapshotItem, previousQuantity: number, deltaOverride?: number): ChangeEntry {
+  const delta = deltaOverride ?? roundQuantity(item.quantity - previousQuantity);
+  return {
+    name: item.name,
+    unit: item.unit,
+    previousQuantity: roundQuantity(previousQuantity),
+    quantity: roundQuantity(item.quantity),
+    delta,
+  };
+}
+
+function sortChanges(
+  newItems: ChangeEntry[],
+  removedItems: ChangeEntry[],
+  increases: ChangeEntry[],
+  decreases: ChangeEntry[]
+) {
+  newItems.sort((a, b) => b.quantity - a.quantity);
+  removedItems.sort((a, b) => b.previousQuantity - a.previousQuantity);
+  increases.sort((a, b) => b.delta - a.delta);
+  decreases.sort((a, b) => Math.abs(a.delta) - Math.abs(b.delta)).reverse();
+}
+
+function compareRecords(a: SnapshotRecord, b: SnapshotRecord) {
+  const byDate = a.payload.meta.snapshotDate.localeCompare(b.payload.meta.snapshotDate);
+  if (byDate !== 0) return byDate;
+  return a.payload.meta.uploadedAt.localeCompare(b.payload.meta.uploadedAt);
+}
+
+function findLatestRecord(records: SnapshotRecord[]): SnapshotRecord | null {
+  if (records.length === 0) {
+    return null;
+  }
+  const sorted = [...records].sort(compareRecords);
+  return sorted[sorted.length - 1];
+}
+
+function roundQuantity(value: number): number {
+  return Number(value.toFixed(3));
 }
 
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
+
