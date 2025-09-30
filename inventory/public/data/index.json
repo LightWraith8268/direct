@@ -1,0 +1,11 @@
+[
+  {
+    "snapshotDate": "2025-09-30",
+    "uploadedAt": "2025-09-30T16:06:55.303Z",
+    "sourceFile": "stock-items_09_30_2025.csv",
+    "path": "data/snapshots/2025-09-30_20250930T160655Z.json",
+    "latestForDate": true,
+    "totalItems": 128,
+    "totalQuantity": 19041.89
+  }
+]

@@ -1,0 +1,22 @@
+# Root dependencies
+node_modules/
+
+# Inventory app dependencies and build output
+inventory/node_modules/
+inventory/dist/
+inventory/.svelte-kit/
+
+# Build artifacts
+.dist/
+dist/
+Deploy/
+deploy/
+
+# Logs and misc
+npm-debug.log*
+*.log
+.DS_Store
+
+# Local environment
+.env
+.env.local

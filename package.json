@@ -1,0 +1,19 @@
+{
+  "name": "inventory-root",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build-data": "tsx scripts/processSnapshots.ts",
+    "lint": "echo \"TODO: configure root linting\"",
+    "test": "npm run lint"
+  },
+  "devDependencies": {
+    "@types/node": "^22.4.1",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "csv-parse": "^6.1.0"
+  }
+}
