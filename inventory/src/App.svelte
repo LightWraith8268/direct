@@ -212,8 +212,10 @@
       Data is sourced from dated CSV uploads stored in <code>data/raw</code>. Run <code>npm run build-data</code> to
       regenerate processed snapshots and surface them here.
     </p>
+    <p class="version">Build: 2025-09-30T22:05:22Z</p>
   </footer>
 </main>
+
 
 
 
