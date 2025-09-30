@@ -46,7 +46,7 @@ a:hover {
   padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 4vw, 1.75rem) clamp(2.5rem, 5vw, 4rem);
   display: flex;
   flex-direction: column;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  gap: clamp(1.2rem, 2.5vw, 2rem);
 }
 
 .hero {
@@ -91,11 +91,19 @@ a:hover {
 
 .grid {
   display: grid;
-  gap: clamp(1.2rem, 3vw, 1.8rem);
+  gap: clamp(1rem, 2.5vw, 1.6rem);
 }
 
 .grid--wide {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.grid--pair {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.grid--single {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .grid--summary {
@@ -106,7 +114,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding: clamp(1.2rem, 2.5vw, 1.8rem);
+  padding: clamp(1rem, 2vw, 1.5rem);
   background: var(--brand-surface);
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.04);
@@ -506,8 +514,16 @@ code {
   }
 
   .grid--wide {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  }
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.grid--pair {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.grid--single {
+  grid-template-columns: minmax(0, 1fr);
+}
 
   .upload-drop {
     padding: 1.4rem 1rem;
@@ -516,6 +532,15 @@ code {
 
 @media (min-width: 1080px) {
   .grid--wide {
-    grid-template-columns: 2fr 3fr;
-  }
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
+
+.grid--pair {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.grid--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+}
+

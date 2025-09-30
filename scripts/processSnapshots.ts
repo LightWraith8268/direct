@@ -269,7 +269,7 @@ async function processCsv(
     uploadedAt = reusable.meta.uploadedAt;
     jsonFileName = reusable.fileName;
   } else {
-    uploadedAt = createDefaultUploadedAt(snapshotDate);
+    uploadedAt = await determineUploadTimestamp(filePath);
     jsonFileName = generateSnapshotFileName(snapshotDate, uploadedAt);
   }
 
@@ -359,11 +359,6 @@ function hashItems(items: SnapshotItem[]) {
   const hash = createHash("sha256");
   hash.update(JSON.stringify(items));
   return hash.digest("hex");
-}
-
-function createDefaultUploadedAt(snapshotDate: string): string {
-  const date = new Date(`${snapshotDate}T12:00:00Z`);
-  return date.toISOString();
 }
 
 function generateSnapshotFileName(snapshotDate: string, uploadedAt: string): string {
@@ -612,5 +607,6 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
 
 

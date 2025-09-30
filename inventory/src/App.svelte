@@ -192,21 +192,18 @@
       </section>
     {/if}
 
-    <section class="grid grid--wide">
+    <section class="grid grid--pair">
       <InventorySummary {report} {hasBaseline} />
+      <LatestSnapshot meta={latestMeta} items={latestItems} />
+    </section>
+
+    <section class="grid grid--pair">
+      <ChangeHighlights {report} {hasBaseline} />
       <SnapshotTimeline snapshots={timeline} />
     </section>
 
-    <section class="grid grid--wide">
-      <ChangeHighlights {report} {hasBaseline} />
-    </section>
-
-    <section class="grid">
+    <section class="grid grid--single">
       <UploadPanel baselineItems={latestItems} baselineReport={report} />
-    </section>
-
-    <section class="grid">
-      <LatestSnapshot meta={latestMeta} items={latestItems} />
     </section>
   {/if}
 
@@ -217,6 +214,7 @@
     </p>
   </footer>
 </main>
+
 
 
 
