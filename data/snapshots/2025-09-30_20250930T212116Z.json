@@ -1,7 +1,7 @@
 {
   "meta": {
     "snapshotDate": "2025-09-30",
-    "uploadedAt": "2025-09-30T19:57:30.084Z",
+    "uploadedAt": "2025-09-30T21:21:16.799Z",
     "sourceFile": "stock-items_09_30_2025.csv"
   },
   "items": [
@@ -26,7 +26,7 @@
       "quantity": 88.74
     },
     {
-      "name": ".75” Mountain Granite",
+      "name": ".75\" Mountain Granite",
       "unit": "TON",
       "quantity": 78.33
     },
@@ -76,7 +76,7 @@
       "quantity": 74.93
     },
     {
-      "name": "1.5” Mountain Granite",
+      "name": "1.5\" Mountain Granite",
       "unit": "TON",
       "quantity": 67.08
     },

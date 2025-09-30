@@ -58,10 +58,10 @@
       <h2>Latest Snapshot</h2>
       {#if meta}
         <p class="panel__sub">
-          Snapshot {meta.snapshotDate} · Uploaded {new Date(meta.uploadedAt).toLocaleString()}
+          Snapshot {meta.snapshotDate}   Uploaded {new Date(meta.uploadedAt).toLocaleString()}
         </p>
       {:else}
-        <p class="panel__sub">Waiting for processed inventory data…</p>
+        <p class="panel__sub">Waiting for processed inventory data </p>
       {/if}
     </div>
     <button class="panel__action" type="button" on:click={handleExport} disabled={!hasData()}>

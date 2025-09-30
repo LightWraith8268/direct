@@ -280,7 +280,7 @@
           {#if hasBaseline}
             <strong>
               {preview.report.totals.deltaItems >= 0 ? "?" : "?"}
-              {Math.abs(preview.report.totals.deltaItems).toLocaleString()} items ·
+              {Math.abs(preview.report.totals.deltaItems).toLocaleString()} items  
               {preview.report.totals.deltaQuantity >= 0 ? "?" : "?"}
               {formatQuantity(Math.abs(preview.report.totals.deltaQuantity))} units
             </strong>
@@ -294,7 +294,7 @@
         <p><span>New items:</span> {preview.report.counts.new.toLocaleString()}</p>
         <p><span>Removed items:</span> {preview.report.counts.removed.toLocaleString()}</p>
         <p>
-          <span>Qty increases:</span> {preview.report.counts.increased.toLocaleString()} · decreases:
+          <span>Qty increases:</span> {preview.report.counts.increased.toLocaleString()}   decreases:
           {preview.report.counts.decreased.toLocaleString()}
         </p>
       </div>

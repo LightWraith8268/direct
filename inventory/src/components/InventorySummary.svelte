@@ -25,7 +25,7 @@
     if (value === 0) {
       return "No change";
     }
-    const sign = value > 0 ? "+" : "–";
+    const sign = value > 0 ? "+" : " ";
     const amount = deltaFormatter.format(Math.abs(value));
     return `${sign}${amount} ${suffix}`;
   };
@@ -76,3 +76,4 @@
     </article>
   </div>
 </section>
+

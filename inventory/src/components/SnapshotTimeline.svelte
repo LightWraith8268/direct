@@ -11,12 +11,12 @@
 
   const formatLabel = (entry: SnapshotIndexEntry) => {
     const uploaded = new Date(entry.uploadedAt);
-    return `${entry.snapshotDate} · ${timeFormatter.format(uploaded)}`;
+    return `${entry.snapshotDate}   ${timeFormatter.format(uploaded)}`;
   };
 
   const formatTotals = (entry: SnapshotIndexEntry) => {
     const quantity = quantityFormatter.format(entry.totalQuantity);
-    return `${entry.totalItems} items · ${quantity} units`;
+    return `${entry.totalItems} items   ${quantity} units`;
   };
 </script>
 

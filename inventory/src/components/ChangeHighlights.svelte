@@ -22,7 +22,7 @@
 
   const formatDelta = (entry: ChangeEntry) => {
     if (entry.delta === 0) return "0";
-    const sign = entry.delta > 0 ? "+" : "–";
+    const sign = entry.delta > 0 ? "+" : " ";
     return `${sign}${formatQuantity(Math.abs(entry.delta))}`;
   };
 
@@ -44,7 +44,7 @@
   </header>
 
   {#if !report}
-    <p class="empty-state">Waiting for report data…</p>
+    <p class="empty-state">Waiting for report data </p>
   {:else}
     <div class="change-grid">
       <article>

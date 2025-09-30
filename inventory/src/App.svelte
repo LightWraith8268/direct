@@ -183,7 +183,7 @@
 
   {#if loading}
     <section class="panel">
-      <p>Loading latest snapshot…</p>
+      <p>Loading latest snapshot...</p>
     </section>
   {:else}
     {#if errorMessage}
@@ -217,6 +217,7 @@
     </p>
   </footer>
 </main>
+
 
 
 

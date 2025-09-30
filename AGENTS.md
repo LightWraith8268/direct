@@ -7,9 +7,9 @@
 - `scripts/` hosts Node+TypeScript tooling (`processSnapshots.ts`) that parses CSV input, produces snapshots, and computes diff metadata.
 
 ## Build, Test, and Development Commands
-- `npm run build-data` – parse raw CSV files, refresh snapshots, reports, and update `latest*.json` artifacts.
-- `npm run dev` (inside `inventory/`) – launch the dashboard locally with hot reload.
-- `npm run build` (inside `inventory/`) – generate the production bundle in `inventory/dist/` for GitHub Pages.
+- `npm run build-data` - parse raw CSV files, refresh snapshots, reports, and update `latest*.json` artifacts.
+- `npm run dev` (inside `inventory/`) - launch the dashboard locally with hot reload.
+- `npm run build` (inside `inventory/`) - generate the production bundle in `inventory/dist/` for GitHub Pages.
 
 ## Coding Style & Naming Conventions
 - TypeScript with 2-space indentation; prefer named exports for shared modules.
