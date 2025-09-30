@@ -6,8 +6,10 @@
 
   const hasData = () => meta && items.length > 0;
 
+  $: sortedItems = hasData() ? [...items].sort((a, b) => b.quantity - a.quantity) : [];
+
   const escape = (value: string) => {
-    if (value.includes("\"") || value.includes(",") || value.includes("\n")) {
+    if (value.includes('"') || value.includes(',') || value.includes('\n')) {
       return `"${value.replace(/"/g, '""')}"`;
     }
     return value;
@@ -23,12 +25,8 @@
 
   const toCsv = () => {
     const header = ["Name", "Unit", "Quantity"].join(",");
-    const rows = items.map((item) =>
-      [
-        escape(item.name),
-        escape(item.unit ?? ""),
-        escape(formatQuantity(item.quantity)),
-      ].join(",")
+    const rows = sortedItems.map((item) =>
+      [escape(item.name), escape(item.unit ?? ""), escape(formatQuantity(item.quantity))].join(",")
     );
 
     return [header, ...rows].join("\r\n");
@@ -81,7 +79,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each items as item (item.name)}
+        {#each sortedItems as item (item.name)}
           <tr>
             <td>{item.name}</td>
             <td>{item.unit}</td>
@@ -96,4 +94,3 @@
     </p>
   {/if}
 </section>
-
