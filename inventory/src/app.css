@@ -37,7 +37,7 @@ a:hover {
 .layout {
   max-width: min(1240px, 100%);
   margin: 0 auto;
-  padding: clamp(1.2rem, 3vw, 2rem) clamp(1rem, 4vw, 1.75rem) clamp(2rem, 4vw, 3rem);
+  padding: clamp(1.2rem, 3vw, 2rem) clamp(1rem, 4vw, 1.75rem) clamp(2.5rem, 5vw, 4rem);
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
@@ -77,32 +77,27 @@ a:hover {
   cursor: not-allowed;
   box-shadow: 0 1.1rem 2.4rem rgba(251, 142, 40, 0.25);
 }
-.grid {
+
+.stack {
   display: grid;
   row-gap: 0.625rem;
-  column-gap: clamp(0.75rem, 2vw, 1.25rem);
 }
 
-.grid--wide {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+.stack--masonry {
+  display: block;
+  column-count: 2;
+  column-gap: 0.625rem;
 }
 
-.grid--pair {
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  align-items: start;
-}
-
-.grid--single {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.grid--summary {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+.stack--masonry > * {
+  break-inside: avoid;
+  margin-bottom: 0.625rem;
+  width: 100%;
 }
 .panel {
   display: flex;
   flex-direction: column;
-  gap: clamp(0.9rem, 2vw, 1.3rem);
+  gap: 0.625rem;
   padding: clamp(0.9rem, 2vw, 1.3rem);
   background: var(--brand-surface);
   border-radius: 1rem;
@@ -110,7 +105,6 @@ a:hover {
   box-shadow: 0 1.8rem 2.8rem rgba(0, 0, 0, 0.34);
   backdrop-filter: blur(6px);
 }
-
 .panel--message {
   border-color: rgba(251, 142, 40, 0.45);
   background: rgba(251, 142, 40, 0.12);
@@ -453,12 +447,8 @@ code {
     text-align: center;
   }
 
-  .grid {
-    column-gap: 0.875rem;
-  }
-
-  .grid--pair {
-    grid-template-columns: minmax(0, 1fr);
+  .stack--masonry {
+    column-count: 1;
   }
 
   .upload-drop {
@@ -467,7 +457,8 @@ code {
 }
 
 @media (min-width: 1080px) {
-  .grid--pair {
-    grid-template-columns: 1fr 1fr;
+  .stack--masonry {
+    column-count: 2;
   }
 }
+

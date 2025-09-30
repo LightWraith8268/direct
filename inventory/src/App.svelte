@@ -192,17 +192,14 @@
       </section>
     {/if}
 
-    <section class="grid grid--pair">
+    <section class="stack stack--masonry">
       <InventorySummary {report} {hasBaseline} />
       <LatestSnapshot meta={latestMeta} items={latestItems} />
-    </section>
-
-    <section class="grid grid--pair">
       <ChangeHighlights {report} {hasBaseline} />
       <SnapshotTimeline snapshots={timeline} />
     </section>
 
-    <section class="grid grid--single">
+    <section class="stack">
       <UploadPanel baselineItems={latestItems} baselineReport={report} />
     </section>
   {/if}
@@ -212,10 +209,9 @@
       Data is sourced from dated CSV uploads stored in <code>data/raw</code>. Run <code>npm run build-data</code> to
       regenerate processed snapshots and surface them here.
     </p>
-    <p class="version">Build: 2025-09-30T22:11:43Z</p>
+    <p class="version">Build: 2025-09-30T22:24:21Z</p>
   </footer>
 </main>
-
 
 
 
