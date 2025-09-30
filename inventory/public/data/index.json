@@ -1,9 +1,9 @@
 [
   {
     "snapshotDate": "2025-09-30",
-    "uploadedAt": "2025-09-30T21:21:16.799Z",
+    "uploadedAt": "2025-09-30T12:00:00.000Z",
     "sourceFile": "stock-items_09_30_2025.csv",
-    "path": "data/snapshots/2025-09-30_20250930T212116Z.json",
+    "path": "data/snapshots/2025-09-30_20250930T120000Z.json",
     "latestForDate": true,
     "totalItems": 128,
     "totalQuantity": 19041.89
