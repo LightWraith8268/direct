@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { parse } from "csv-parse/sync";
+import { createHash } from "crypto";
 
 const RAW_DIR = path.resolve("data", "raw");
 const SNAPSHOT_DIR = path.resolve("data", "snapshots");
@@ -79,9 +80,20 @@ interface SnapshotReport {
   decreases: ChangeEntry[];
 }
 
+interface ExistingSnapshotRecord {
+  key: string;
+  hash: string;
+  meta: SnapshotMeta;
+  fileName: string;
+}
+
+type ExistingSnapshots = Map<string, ExistingSnapshotRecord[]>;
+
 async function main() {
   await ensureDirectories();
+  const existingSnapshots = await loadExistingSnapshots();
   await clearDerivedDirectories();
+
   const csvFiles = await listCsvFiles();
 
   if (csvFiles.length === 0) {
@@ -94,7 +106,7 @@ async function main() {
   const records: SnapshotRecord[] = [];
 
   for (const fileName of csvFiles) {
-    const record = await processCsv(fileName);
+    const record = await processCsv(fileName, existingSnapshots);
     records.push(record);
     await writeSnapshot(record);
   }
@@ -134,7 +146,9 @@ async function clearDerivedDirectories() {
 async function emptyDir(directory: string) {
   try {
     const entries = await fs.readdir(directory);
-    await Promise.all(entries.map((entry) => fs.rm(path.join(directory, entry), { recursive: true, force: true })));
+    await Promise.all(
+      entries.map((entry) => fs.rm(path.join(directory, entry), { recursive: true, force: true }))
+    );
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") {
       return;
@@ -142,6 +156,56 @@ async function emptyDir(directory: string) {
     throw error;
   }
 }
+
+async function loadExistingSnapshots(): Promise<ExistingSnapshots> {
+  try {
+    const raw = await fs.readFile(DATA_INDEX_PATH, "utf8");
+    const entries = JSON.parse(raw) as SnapshotIndexEntry[];
+    const map: ExistingSnapshots = new Map();
+
+    for (const entry of entries) {
+      const fileName = path.basename(entry.path);
+      const snapshotPath = path.join(SNAPSHOT_DIR, fileName);
+
+      try {
+        const snapshotRaw = await fs.readFile(snapshotPath, "utf8");
+        const payload = JSON.parse(snapshotRaw) as SnapshotPayload;
+        const items = [...(payload.items ?? [])].sort((a, b) => a.name.localeCompare(b.name));
+        const hash = hashItems(items);
+        const key = makeExistingKey(entry.sourceFile, entry.snapshotDate);
+        const record: ExistingSnapshotRecord = {
+          key,
+          hash,
+          meta: {
+            snapshotDate: entry.snapshotDate,
+            uploadedAt: entry.uploadedAt,
+            sourceFile: entry.sourceFile,
+          },
+          fileName,
+        };
+
+        const bucket = map.get(key);
+        if (bucket) {
+          bucket.push(record);
+        } else {
+          map.set(key, [record]);
+        }
+      } catch (error) {
+        // Ignore missing snapshots; they will be regenerated.
+        continue;
+      }
+    }
+
+    return map;
+  } catch (error) {
+    return new Map();
+  }
+}
+
+function makeExistingKey(sourceFile: string, snapshotDate: string) {
+  return `${snapshotDate}::${sourceFile}`;
+}
+
 async function listCsvFiles(): Promise<string[]> {
   const entries = await fs.readdir(RAW_DIR, { withFileTypes: true });
   return entries
@@ -150,7 +214,10 @@ async function listCsvFiles(): Promise<string[]> {
     .sort();
 }
 
-async function processCsv(fileName: string): Promise<SnapshotRecord> {
+async function processCsv(
+  fileName: string,
+  existingSnapshots: ExistingSnapshots
+): Promise<SnapshotRecord> {
   const filePath = path.join(RAW_DIR, fileName);
   const csvContent = await fs.readFile(filePath, "utf8");
   const rows = parse(csvContent, {
@@ -161,7 +228,6 @@ async function processCsv(fileName: string): Promise<SnapshotRecord> {
   }) as CsvRow[];
 
   const snapshotDate = deriveSnapshotDate(fileName);
-  const uploadedAt = await determineUploadTimestamp(filePath);
 
   const items: SnapshotItem[] = [];
   const seen = new Set<string>();
@@ -192,8 +258,22 @@ async function processCsv(fileName: string): Promise<SnapshotRecord> {
 
   items.sort((a, b) => a.name.localeCompare(b.name));
 
+  const itemsHash = hashItems(items);
+  const existingKey = makeExistingKey(fileName, snapshotDate);
+  const reusable = takeExistingSnapshot(existingSnapshots, existingKey, itemsHash);
+
+  let uploadedAt: string;
+  let jsonFileName: string;
+
+  if (reusable) {
+    uploadedAt = reusable.meta.uploadedAt;
+    jsonFileName = reusable.fileName;
+  } else {
+    uploadedAt = await determineUploadTimestamp(filePath);
+    jsonFileName = generateSnapshotFileName(snapshotDate, uploadedAt);
+  }
+
   const totals = calculateTotals(items);
-  const jsonFileName = generateSnapshotFileName(snapshotDate, uploadedAt);
 
   const payload: SnapshotPayload = {
     meta: {
@@ -217,6 +297,29 @@ async function processCsv(fileName: string): Promise<SnapshotRecord> {
   );
 
   return { payload, jsonFileName, indexEntry };
+}
+
+function takeExistingSnapshot(
+  existingSnapshots: ExistingSnapshots,
+  key: string,
+  hash: string
+): ExistingSnapshotRecord | null {
+  const bucket = existingSnapshots.get(key);
+  if (!bucket || bucket.length === 0) {
+    return null;
+  }
+
+  const index = bucket.findIndex((entry) => entry.hash === hash);
+  if (index === -1) {
+    return null;
+  }
+
+  const [record] = bucket.splice(index, 1);
+  if (bucket.length === 0) {
+    existingSnapshots.delete(key);
+  }
+
+  return record;
 }
 
 async function determineUploadTimestamp(filePath: string): Promise<string> {
@@ -245,11 +348,17 @@ function parseQuantity(value: string | undefined): number {
 
 function calculateTotals(items: SnapshotItem[]) {
   const totalQuantityRaw = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalQuantity = Number(totalQuantityRaw.toFixed(3));
+  const totalQuantity = roundQuantity(totalQuantityRaw);
   return {
     count: items.length,
     totalQuantity,
   };
+}
+
+function hashItems(items: SnapshotItem[]) {
+  const hash = createHash("sha256");
+  hash.update(JSON.stringify(items));
+  return hash.digest("hex");
 }
 
 function generateSnapshotFileName(snapshotDate: string, uploadedAt: string): string {
@@ -498,5 +607,3 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
-
-

@@ -4,6 +4,7 @@
   import InventorySummary from "./components/InventorySummary.svelte";
   import LatestSnapshot from "./components/LatestSnapshot.svelte";
   import SnapshotTimeline from "./components/SnapshotTimeline.svelte";
+  import UploadPanel from "./components/UploadPanel.svelte";
   import type {
     SnapshotIndexEntry,
     SnapshotItem,
@@ -201,6 +202,10 @@
     </section>
 
     <section class="grid">
+      <UploadPanel baselineItems={latestItems} baselineReport={report} />
+    </section>
+
+    <section class="grid">
       <LatestSnapshot meta={latestMeta} items={latestItems} />
     </section>
   {/if}
@@ -212,5 +217,8 @@
     </p>
   </footer>
 </main>
+
+
+
 
 

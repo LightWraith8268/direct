@@ -60,7 +60,7 @@
     <article class="metric-card">
       <h3>Changed Items</h3>
       <p>{formatCount(changedItems)}</p>
-      <span class="metric-sub">+{formatCount(counts.increased)} increased · -{formatCount(counts.decreased)} decreased</span>
+      <span class="metric-sub">+{formatCount(counts.increased)} increased / -{formatCount(counts.decreased)} decreased</span>
     </article>
 
     <article class="metric-card">
