@@ -100,6 +100,12 @@ a:hover {
 
 .grid--pair {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.grid--single {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .grid--single {
@@ -111,6 +117,7 @@ a:hover {
 }
 
 .panel {
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -519,6 +526,12 @@ code {
 
 .grid--pair {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.grid--single {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .grid--single {
@@ -537,10 +550,20 @@ code {
 
 .grid--pair {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.grid--single {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .grid--single {
   grid-template-columns: minmax(0, 1fr);
 }
 }
+
+
+
+
 
