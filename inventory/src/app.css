@@ -43,10 +43,10 @@ a:hover {
 .layout {
   max-width: min(1240px, 100%);
   margin: 0 auto;
-  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 4vw, 1.75rem) clamp(2.5rem, 5vw, 4rem);
+  padding: clamp(1.2rem, 3vw, 2rem) clamp(1rem, 4vw, 1.75rem) clamp(2.5rem, 5vw, 4rem);
   display: flex;
   flex-direction: column;
-  gap: clamp(1.2rem, 2.5vw, 2rem);
+  gap: 0.625rem;
 }
 
 .hero {
@@ -54,7 +54,7 @@ a:hover {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: clamp(1.2rem, 3vw, 2rem);
+  gap: 0.625rem;
 }
 
 .hero h1 {
@@ -91,7 +91,7 @@ a:hover {
 
 .grid {
   display: grid;
-  gap: clamp(1rem, 2.5vw, 1.6rem);
+  gap: 0.625rem;
 }
 
 .grid--wide {
@@ -100,8 +100,6 @@ a:hover {
 
 .grid--pair {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  grid-auto-rows: minmax(0, 1fr);
-  align-items: stretch;
 }
 
 .grid--single {
@@ -120,8 +118,8 @@ a:hover {
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: clamp(1rem, 2vw, 1.5rem);
+  gap: 0.625rem;
+  padding: clamp(0.9rem, 2vw, 1.3rem);
   background: var(--brand-surface);
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.04);
@@ -412,7 +410,7 @@ a:hover {
 .upload-changes {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: clamp(0.9rem, 2.5vw, 1.3rem);
+  gap: 0.625rem;
 }
 
 .upload-changes article {
@@ -526,8 +524,6 @@ code {
 
 .grid--pair {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  grid-auto-rows: minmax(0, 1fr);
-  align-items: stretch;
 }
 
 .grid--single {
@@ -550,8 +546,6 @@ code {
 
 .grid--pair {
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  grid-auto-rows: minmax(0, 1fr);
-  align-items: stretch;
 }
 
 .grid--single {
@@ -562,8 +556,4 @@ code {
   grid-template-columns: minmax(0, 1fr);
 }
 }
-
-
-
-
 
